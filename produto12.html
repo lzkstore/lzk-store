@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>INGLATERRA</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    .price {
+      font-size: 22px;
+      color: green;
+      margin: 10px 0;
+    }
+    .descricao {
+      font-size: 17px;
+      color: #555;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+    .btn {
+      padding: 12px 24px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+      margin: 10px;
+    }
+    .voltar {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+    .voltar:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script>
+    function adicionarAoCarrinho() {
+      let carrinho = JSON.parse(localStorage.getItem("carrinhoItens")) || [];
+      carrinho.push({ nome: "INGLATERRA", preco: 299.90, imagem: "inglaterra1.png" });
+      localStorage.setItem("carrinhoItens", JSON.stringify(carrinho));
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>INGLATERRA</h1>
+    <img src="imagens/inglaterra1.png" alt="INGLATERRA">
+    <p class="price">R$ 299,90</p>
+    <p class="descricao">Produto de alta qualidade, importado com exclusividade.</p>
+
+    <button class="btn" onclick="adicionarAoCarrinho()">Adicionar ao Carrinho</button>
+
+    <a class="voltar" href="index_carrinho_com_fotos.html">← Voltar para a loja</a>
+  </div>
+</body>
+</html>

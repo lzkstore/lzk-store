@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<title>Dri-fit Imports</title>
+<style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            flex: 1;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #000000;
+            color: red;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #000000;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product {
+            background-color: white;
+            width: 250px;
+            margin: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-info h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        footer {
+            background-color: #000000;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: auto;
+        }
+    
+        .section-title {
+            width: 100%;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin: 40px 0 10px;
+            color: #000;
+        }
+    
+        .carousel-section {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .carousel-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 15px;
+            padding: 10px;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: black;
+            color: white;
+            border: none;
+            font-size: 24px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .left-btn {
+            left: 0;
+        }
+        .right-btn {
+            right: 0;
+        }
+
+.botao-carrinho {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+    header h1 {
+        font-family: 'Fredericka the Great', cursive;
+        font-size: 40px;
+        color: white;
+    }
+    
+#botao-carrinho {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: #343a40;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#botao-carrinho:hover {
+  background-color: #495057;
+  transform: scale(1.05);
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fredericka+the+Great&amp;display=swap" rel="stylesheet"/></head>
+<body onload="carregarCarrinho()">
+<div style="position: absolute; top: 10px; right: 10px;">
+<button id="botao-carrinho" onclick="mostrarCarrinho()" style="font-size: 16px; padding: 10px 18px; background-color: #343a40; color: white; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">🛒 Carrinho</button>
+</div>
+<div id="area-carrinho" style="display:none; background:#f4f4f4; padding: 20px; text-align:center;">
+<h3 style="font-size: 26px; color: #222; margin-bottom: 15px; font-weight: bold; text-transform: uppercase;">Seu Carrinho</h3>
+<ul id="lista-carrinho" style="list-style:none; padding-left:0; font-size:16px;"></ul>
+<p style="font-size: 22px; margin-top: 20px; color: #111; font-weight: bold;">Total da compra: R$ <span id="total">0.00</span></p>
+<button onclick="mostrarPagamento()" style="padding:10px 20px; font-size:16px; background:#28a745; color:white; border:none; border-radius:5px;">Finalizar Compra</button>
+<div id="pagamento-opcoes" style="margin-top: 20px; display: none; font-size: 20px; padding: 30px; background: #eaeaea; border-radius: 12px; text-align: center;">
+<h4 style="font-size: 24px; margin-bottom: 20px;">ESCOLHA A FORMA DE PAGAMENTO:</h4>
+<button onclick="mostrarFormulario('pix')" style="padding: 12px 20px; margin: 10px; font-size: 18px; background: #007BFF; color: white; border: none; border-radius: 8px; cursor: pointer;">🔑 Pagar com PIX</button>
+<button onclick="mostrarFormulario('credito')" style="padding: 12px 20px; margin: 10px; font-size: 18px; background: #007BFF; color: white; border: none; border-radius: 8px; cursor: pointer;">💳 Cartão de Crédito</button>
+<button onclick="mostrarFormulario('debito')" style="padding: 12px 20px; margin: 10px; font-size: 18px; background: #007BFF; color: white; border: none; border-radius: 8px; cursor: pointer;">💳 Cartão de Débito</button>
+<div id="formulario-cartao" style="margin-top: 20px; display: none; text-align: center;">
+<h4>Preencha os dados do cartão:</h4>
+<input placeholder="Número do Cartão" style="display:block; margin: 10px auto; padding: 10px; width: 250px; font-size: 16px;" type="text"/><br/>
+<input placeholder="CVV" style="display:block; margin: 10px auto; padding: 10px; width: 250px; font-size: 16px;" type="text"/><br/>
+<input placeholder="Validade (MM/AA)" style="display:block; margin: 10px auto; padding: 10px; width: 250px; font-size: 16px;" type="text"/><br/>
+<button style="margin-top: 15px; padding: 10px 20px; font-size: 16px; background: #28a745; color: white; border: none; border-radius: 6px;">Confirmar Pagamento</button>
+</div>
+<div id="mensagem-pix" style="margin-top: 20px; display: none; font-size: 18px; color: #333;">
+<p>Chave PIX: primosimports@pix.com.br</p>
+</div>
+</div>
+</div>
+<header>
+<h1>PRIMOS IMPORTS</h1>
+</header>
+<nav>
+<a href="index.html">INICIO</a>
+<a href="contato.html">CONTATO</a>
+</nav>
+<div class="container">
+<div class="section-title">AIR MAX TN 1</div>
+<div class="carousel-section">
+<button class="carousel-button left-btn" onclick="scrollCarousel('carousel1', -1)">❮</button>
+<div class="carousel-container" id="carousel1">
+<div class="product">
+<a href="produto6.html"><img alt="Produto 6" src="imagens/airmaxtn5.png"/></a>
+<div class="product-info">
+<h3>TN DEADPOOL</h3>
+</div>
+</div>
+<div class="product">
+<a href="produto1.html"><img alt="Produto 1" src="imagens/airmaxtn2.png"/></a>
+<div class="product-info">
+<h3>TN ÓREO</h3>
+</div>
+</div><div class="product">
+<a href="produto2.html"><img alt="Produto 2" src="imagens/airmaxtn3.png"/></a>
+<div class="product-info">
+<h3>TN BARCELONA</h3>
+</div>
+</div><div class="product">
+<a href="produto3.html"><img alt="Produto 3" src="imagens/airmaxtn1.png"/></a>
+<div class="product-info">
+<h3>TN DRAKULA</h3>
+</div>
+</div><div class="product">
+<a href="produto4.html"><img alt="Produto 4" src="imagens/tripleblack1.png"/></a>
+<div class="product-info">
+<h3>TN TRIPLE BLACK</h3>
+</div>
+</div><div class="product">
+<a href="produto5.html"><img alt="Produto 5" src="imagens/triplewhite1.png"/></a>
+<div class="product-info">
+<h3>TN TRIPLE WHITE</h3>
+</div>
+</div></div>
+<button class="carousel-button right-btn" onclick="scrollCarousel('carousel1', 1)">❯</button>
+</div>
+<div class="section-title">CAMISAS RETRÔ</div>
+<div class="carousel-section">
+<button class="carousel-button left-btn" onclick="scrollCarousel('carousel2', -1)">❮</button>
+<div class="carousel-container" id="carousel2">
+<div class="product">
+<a href="produto12.html"><img alt="Produto 12" src="imagens/inglaterra1.png"/></a>
+<div class="product-info">
+<h3>INGLATERRA</h3>
+</div>
+</div>
+<div class="product">
+<a href="produto7.html"><img alt="Produto 7" src="imagens/milan1.png"/></a>
+<div class="product-info">
+<h3>MILAN </h3>
+</div>
+</div><div class="product">
+<a href="produto8.html"><img alt="Produto 8" src="imagens/realmadrid1.png"/></a>
+<div class="product-info">
+<h3>REAL MADRID</h3>
+</div>
+</div><div class="product">
+<a href="produto9.html"><img alt="Produto 9" src="imagens/santos1.png"/></a>
+<div class="product-info">
+<h3>SANTOS</h3>
+</div>
+</div><div class="product">
+<a href="produto10.html"><img alt="Produto 10" src="imagens/chelsea1.png"/></a>
+<div class="product-info">
+<h3>CHELSEA</h3>
+</div>
+</div><div class="product">
+<a href="produto11.html"><img alt="Produto 11" src="imagens/barcelona1.png"/></a>
+<div class="product-info">
+<h3>BARCELONA</h3>
+</div>
+</div></div>
+<button class="carousel-button right-btn" onclick="scrollCarousel('carousel2', 1)">❯</button>
+</div>
+<div class="section-title">TRACKSUITS</div>
+<div class="carousel-section">
+<button class="carousel-button left-btn" onclick="scrollCarousel('carousel3', -1)">❮</button>
+<div class="carousel-container" id="carousel3">
+<div class="product">
+<a href="produto18.html"><img alt="Produto 18" src="imagens/tkvermelho1.png"/></a>
+<div class="product-info">
+<h3>TRACKSUIT VERMELHO</h3>
+</div>
+</div>
+<div class="product">
+<a href="produto13.html"><img alt="Produto 13" src="imagens/tracksuit1.png"/></a>
+<div class="product-info">
+<h3>TRACKSUIT LIVERPOOL</h3>
+</div>
+</div><div class="product">
+<a href="produto14.html"><img alt="Produto 14" src="imagens/saopaulo01.png"/></a>
+<div class="product-info">
+<h3>TRACKSUIT SÃO PAULO</h3>
+</div>
+</div><div class="product">
+<a href="produto15.html"><img alt="Produto 15" src="imagens/tkpreto1.png"/></a>
+<div class="product-info">
+<h3>TRACKSUIT PRETO</h3>
+</div>
+</div><div class="product">
+<a href="produto16.html"><img alt="Produto 16" src="imagens/tkazulescuro1.png"/></a>
+<div class="product-info">
+<h3>TRACKSUIT AZUL</h3>
+</div>
+</div><div class="product">
+<a href="produto17.html"><img alt="Produto 17" src="imagens/tkbranco1.png"/></a>
+<div class="product-info">
+<h3>TRACKSUIT BRANCO</h3>
+</div>
+</div></div>
+<button class="carousel-button right-btn" onclick="scrollCarousel('carousel3', 1)">❯</button>
+</div>
+</div>
+<footer>
+    © Seu estilo começa aqui!
+
+<div style="margin-top: 10px;">
+</div>
+</footer>
+<script>
+        function scrollCarousel(id, direction) {
+            const container = document.getElementById(id);
+            const scrollAmount = 300;
+            container.scrollLeft += direction * scrollAmount;
+        }
+    </script>
+
+
+<script>
+  function carregarCarrinho() {
+    let carrinho = JSON.parse(localStorage.getItem("carrinhoItens")) || [];
+    let total = 0;
+    const lista = document.getElementById("lista-carrinho");
+    lista.innerHTML = "";
+    carrinho.forEach((item, index) => {
+      total += item.preco;
+      const li = document.createElement("li");
+      li.style.marginBottom = "12px";
+      li.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="imagens/${item.imagem}" alt="${item.nome}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+          <div style="flex-grow: 1;">
+            <strong>${item.nome}</strong><br>R$ ${item.preco.toFixed(2)}
+          </div>
+          <button onclick="removerDoCarrinho(${index})" style="padding: 4px 10px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Remover</button>
+        </div>`;
+      lista.appendChild(li);
+    });
+    document.getElementById("total").innerText = total.toFixed(2);
+  }
+
+  function mostrarCarrinho() {
+    carregarCarrinho();
+    const area = document.getElementById("area-carrinho");
+    area.style.display = area.style.display === "none" ? "block" : "none";
+  }
+
+  function removerDoCarrinho(index) {
+    let carrinho = JSON.parse(localStorage.getItem("carrinhoItens")) || [];
+    carrinho.splice(index, 1);
+    localStorage.setItem("carrinhoItens", JSON.stringify(carrinho));
+    carregarCarrinho();
+  }
+
+  function mostrarPagamento() {
+    document.getElementById("pagamento-opcoes").style.display = "block";
+  }
+
+  function mostrarFormulario(metodo) {
+    document.getElementById("formulario-cartao").style.display = (metodo === 'credito' || metodo === 'debito') ? "block" : "none";
+    document.getElementById("mensagem-pix").style.display = metodo === 'pix' ? "block" : "none";
+  }
+</script>
+</body>
+</html>
