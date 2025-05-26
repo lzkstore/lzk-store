@@ -18,8 +18,7 @@ Com funcionalidades de:
 
 Você pode visualizar o site publicado em:
 
-👉 [https://seunome.github.io/primosimports](https://seunome.github.io/primosimports)  
-(Substitua `seunome` pelo seu nome de usuário no GitHub)
+👉 [https://lzkimports.github.io/lzkimports]  
 
-## 📁 Estrutura do Projeto
+
 
